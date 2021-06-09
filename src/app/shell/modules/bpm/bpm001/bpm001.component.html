@@ -1,0 +1,45 @@
+<form [formGroup]="clientRegister" (ngSubmit)="onClientRegister()" class="ui segments client-registration">
+  <div class="ui segment">
+    <h1>კლიენტის რეგისტრაცია</h1>
+  </div>
+  <div class="ui segment">
+    <div class="ui form">
+      <div class="ui fields">
+        <div class="nine wide field">
+          <label for="firstName">სახელი</label>
+          <input type="text" formControlName="firstName">
+          <p class="required" *ngIf="get('firstName').invalid && get('firstName').touched">
+            <ng-container *ngFor="let errorMessage of errors('firstName')">
+              <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+            </ng-container>
+          </p>
+        </div>
+      </div>
+      <div class="ui fields">
+        <div class="nine wide field">
+          <label for="lastName">გვარი</label>
+          <input type="text" formControlName="lastName">
+          <p class="required" *ngIf="get('lastName').invalid && get('lastName').touched">
+            <ng-container *ngFor="let errorMessage of errors('lastName')">
+              <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+            </ng-container>
+          </p>
+        </div>
+      </div>
+      <div class="ui fields">
+        <div class="nine wide field">
+          <label for="plusPoints">Plus ქულები</label>
+          <input type="number" formControlName="plusPoints">
+          <p class="required" *ngIf="get('plusPoints').invalid && get('plusPoints').touched">
+            <ng-container *ngFor="let errorMessage of errors('plusPoints')">
+              <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+            </ng-container>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ui segment">
+      <button type="submit" class="ui floated blue icon button "><i class="save icon"></i></button>
+  </div>
+</form>

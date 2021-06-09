@@ -1,0 +1,54 @@
+<div class="ui segments section-mrg">
+  <div class="ui segment">
+    <h1>კლიენტის ძებნა</h1>
+  </div>
+  <div class="ui segment">
+    <form [formGroup]="clientForm" (ngSubmit)="onSearch()" class="ui bordered form segment">
+      <div class="ui three column grid">
+        <div class="column">
+          <div class="field">
+            <label for="firstName">სახელი</label>
+            <input type="text" formControlName="firstName">
+          </div>
+        </div>
+        <div class="column">
+          <div class="field">
+            <label for="lastName">გვარი</label>
+            <input type="text" formControlName="lastName">
+          </div>
+        </div>
+        <div class="column">
+          <div class="field">
+            <label for="clientKey">კლიენტის უნიკალური</label>
+            <input type="number" formControlName="clientKey">
+          </div>
+        </div>
+      </div>
+      <div class="grid btn-search">
+        <button type="submit" class="ui floated blue icon button "><i class="search icon"></i></button>
+      </div>
+    </form>
+
+    <div class="table-header" *ngIf="showClients">
+      <span>კლიენტები</span>
+      <button routerLink="/bpm/bpm001" class="ui icon button">
+        <i class="plus icon"></i>
+      </button>
+    </div>
+    <table *ngIf="showClients">
+      <thead>
+        <th>სახელი</th>
+        <th>გვარი</th>
+        <th>კლიენტის უნიკალური</th>
+      </thead>
+      <tbody *ngFor="let client of clients">
+        <tr class="tr-border curClient" (click)="getClientData($event)">
+          <td>{{ client.firstName }}</td>
+          <td>{{ client.lastName }}</td>
+          <td value="client.clientKey">{{ client.clientKey }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

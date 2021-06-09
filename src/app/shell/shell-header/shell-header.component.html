@@ -1,0 +1,29 @@
+<div class="header">
+  <a routerLink='/bpm' class="header__logo">
+    <img src="/assets/images/logo.svg" alt="logo">
+  </a>
+  <div class="header__left-panel">
+    <div class="ui left circular icon input header__left-panel__search">
+      <input type="text">
+      <i class="search icon"></i>
+    </div>
+    <div class="ui basic circular icon button">
+      <i class="film icon"></i>
+    </div>
+    <div class="ui basic circular icon button">
+      <i class="envelope icon"></i>
+    </div>
+    <div class="ui basic circular icon button">
+      <i class="bell icon"></i>
+    </div>
+    <div class="ui basic circular icon button">
+      <i class="bars icon"></i>
+    </div>
+    <div class="ui basic circular icon button bg-popup" bgPopup>
+      <i class="user icon"></i>
+      <div class="body">
+        <div class="item" (click)="onLogOut()">გასვლა</div>
+      </div>
+    </div>
+  </div>
+</div>

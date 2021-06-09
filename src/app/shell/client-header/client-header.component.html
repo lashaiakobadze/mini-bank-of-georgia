@@ -1,0 +1,36 @@
+<div class="ui segments section-mrg" *ngIf="curClient">
+  <div class="ui segment client">
+    <div class="client_info">
+      <div class="client-image">
+        <img src="https://picsum.photos/200" alt="client-image">
+      </div>
+      <div class="client_info_about">
+        <div class="client-name">{{ curClient.firstName }}</div>
+        <div class="client-code">უნიკალური კოდი:<b class="value">{{ curClient.clientKey }}</b></div>
+      </div>
+    </div>
+    <div class="client_service">
+      <div class="client_service_actives">
+        <div class="client_service_actives-active">
+          <span class="active">აქტივები:</span>
+          <div>
+            <span class="balance">{{ curClient.sumAmount }}</span>
+            <span class="gel">GEL</span>
+          </div>
+        </div>
+        <div class="client_service_actives-active pluses">
+          <span class="active">Plus:</span>
+          <b class="plus">{{ curClient.plusPoints }}</b>
+        </div>
+      </div>
+      <div class="client_service_logout">
+        <button class="ui red button" (click)="onLogOutClient()">გასვლა</button>
+      </div>
+    </div>
+  </div>
+  <div class="ui horizontal segments tabs">
+    <a class="ui segment page-link" routerLinkActive="active" routerLink="/krn/krnicp"  href="/krn/krnicp">მთავარი</a>
+    <a class="ui segment page-link" routerLinkActive="active" routerLink="/krn/accounts"  href="/krn/accounts" (click)="onFetchClientAccounts()">ანგარიშები</a>
+    <a class="ui segment page-link" routerLinkActive="active" routerLink="/krn/operations"  href="/krn/operations">ოპერაციები</a>
+  </div>
+</div>

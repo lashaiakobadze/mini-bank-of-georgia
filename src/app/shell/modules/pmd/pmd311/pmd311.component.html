@@ -1,0 +1,53 @@
+<form [formGroup]="sendAmountForm" (ngSubmit)="onSendAmount()" class="ui segments">
+  <div class="ui segment">
+    <h1>თანხის გადარიცხვა</h1>
+  </div>
+  <div class="ui segment">
+    <div class="ui form">
+      <div class="ui fields">
+        <div class="nine wide field">
+          <label for="senderAccountKey">გამგზავნი ანგარიში</label>
+          <select formControlName="senderAccountKey">
+            <option>აირჩიე</option>
+            <option value="215"> 215 - 123.00GEL (123) </option>
+            <!---->
+          </select>
+          <p class="required" *ngIf="get('senderAccountKey').invalid && get('senderAccountKey').touched">
+            <ng-container *ngFor="let errorMessage of errors('senderAccountKey')">
+              <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+            </ng-container>
+          </p>
+        </div>
+      </div>
+      <div class="ui fields">
+        <div class="nine wide field">
+          <label for="receiverAccountKey">მიმღები ანგარიში</label>
+          <select formControlName="receiverAccountKey">
+            <option value="" disabled="">აირჩიე</option>
+            <option value="215"> 215 - 123.00GEL (asd ad) </option>
+            <!---->
+          </select>
+          <p class="required" *ngIf="get('receiverAccountKey').invalid && get('receiverAccountKey').touched">
+            <ng-container *ngFor="let errorMessage of errors('receiverAccountKey')">
+              <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+            </ng-container>
+          </p>
+        </div>
+      </div>
+      <div class="ui fields">
+        <div class="nine wide field">
+          <label for="amount">თანხა</label>
+          <input type="number" formControlName="amount">
+          <p class="required" *ngIf="get('amount').invalid && get('amount').touched">
+            <ng-container *ngFor="let errorMessage of errors('amount')">
+              <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+            </ng-container>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ui segment">
+    <button class="ui green floated icon button" routerLink="/krn/accounts"><i class="chevron down icon"></i></button>
+  </div>
+</form>

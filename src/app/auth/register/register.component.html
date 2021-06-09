@@ -1,0 +1,57 @@
+<form [formGroup]="registerForm"  (ngSubmit)="onRegister()">
+  <div class="field">
+    <div class="ui left icon input">
+      <i class="address card icon"></i>
+      <input formControlName="name" type="text" placeholder="სახელი">
+    </div>
+    <p class="required" *ngIf="get('name').invalid && get('name').touched">
+      <ng-container *ngFor="let errorMessage of errors('name')">
+        <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+      </ng-container>
+    </p>
+  </div>
+  <div class="field">
+    <div class="ui left icon input">
+      <i class="user icon"></i>
+      <input formControlName="username" type="text" placeholder="მომხმარებელი">
+    </div>
+    <p class="required" *ngIf="get('username').invalid && get('username').touched">
+      <ng-container *ngFor="let errorMessage of errors('username')">
+        <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+      </ng-container>
+    </p>
+  </div>
+  <div class="field">
+    <div class="ui left icon input">
+      <i class="lock icon"></i>
+      <input formControlName="password" type="password" placeholder="პაროლი">
+    </div>
+    <p class="required" *ngIf="get('password').invalid && get('password').touched">
+      <ng-container *ngFor="let errorMessage of errors('password')">
+        <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+      </ng-container>
+    </p>
+  </div>
+  <div class="field">
+    <div class="ui left icon input">
+      <i class="lock icon"></i>
+      <input formControlName="confirmPassword" type="password" placeholder="განმეორებითი პაროლი">
+    </div>
+    <p class="required" *ngIf="get('confirmPassword').invalid && get('confirmPassword').touched">
+      <ng-container *ngFor="let errorMessage of errors('confirmPassword')">
+        <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+      </ng-container>
+    </p>
+  </div>
+  <div>
+    <a routerLink="../" href="/auth">
+      <span class="ui orange text">შესვლა</span>
+    </a>
+    <button type="submit" class="ui basic orange right floated button">
+      <i class="sign in alternate icon"></i>
+      რეგისტრაცია
+    </button>
+  </div>
+</form>
+<!-- I will replace with modal -->
+<p class="required">{{ error }}</p>

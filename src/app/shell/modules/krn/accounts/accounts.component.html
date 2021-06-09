@@ -1,0 +1,38 @@
+<div class="ui segments accounts">
+  <div class="ui segment">
+    <h1>ანგარიშები</h1>
+  </div>
+  <div class="ui segment">
+    <div class="ui segments">
+      <div class="table-header">
+        <span>ანგარიშები</span>
+        <button routerLink="/krn/accounts/create" class="ui icon button">
+          <i class="plus icon"></i>
+        </button>
+      </div>
+      <table>
+        <ng-template [ngIf]="!!!curClientAccounts">
+          <div> ჩანაწერი არ მოიძებნა </div>
+        </ng-template>
+        <ng-template [ngIf]="!!curClientAccounts">
+          <thead>
+            <th>მფლობელი</th>
+            <th>სახელი</th>
+            <th>თანხა</th>
+            <th></th>
+          </thead>
+        </ng-template>
+        <tbody *ngFor="let account of curClientAccounts">
+          <tr value="account.accountKey">
+            <td>{{ curClient.firstName }}</td>
+            <td>{{ account.accountName }}</td>
+            <td>{{ account.amount }}</td>
+            <td>
+              <i class="trash button icon" (click)="onDeleteAccount($event)"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
