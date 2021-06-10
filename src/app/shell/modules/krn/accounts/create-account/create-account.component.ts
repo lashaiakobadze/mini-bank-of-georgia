@@ -55,6 +55,12 @@ export class CreateAccountComponent implements OnInit, OnDestroy {
     .subscribe(() => {
       this.createAccountForm.reset();
       this.router.navigate(['/krn/accounts']);
+      this.shellService.fetchClient(this.curClient.clientKey)
+      .subscribe( updatedClientData => {
+          this.shellService.curClient.next(updatedClientData);
+          localStorage.setItem('clientData', JSON.stringify(updatedClientData));
+        }
+      );
     }, error => {
       this.alertService.errorMessage = error;
     });

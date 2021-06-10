@@ -5,10 +5,8 @@ import { Router } from '@angular/router';
 import { BGValidators } from 'src/app/shared/validators/bg-validators';
 import { ShellService } from 'src/app/shell/shell.service';
 import { AlertService } from 'src/app/shared/alert/alert.service';
-import { Client } from '../client.model';
 import { ClientsService } from '../clients.service';
 import { ClientRegister } from './clientRegister.model';
-import { last } from 'rxjs/operators';
 
 @Component({
   selector: 'bg-bpm001',
@@ -41,20 +39,6 @@ export class Bpm001Component implements OnInit {
       ))
       .subscribe(newClient => {
         this.clientRegister.reset();
-
-        // const newCurClient = new Client(
-        //   newClient.clientKey,
-        //   newClient.firstName,
-        //   newClient.image,
-        //   newClient.lastName,
-        //   newClient.plusPoints,
-        //   newClient.sumAmount
-        // );
-
-        // არ მუშაობს ბიჰევიერსაბჯექთი newCurClien-სათვის, წარმოუდგენელია რატომ, newClient-ვერ ხედავს ამის ტიპს.
-        // this.shellService.curClient.next(newCurClient);
-
-
         this.shellService.curClient.next(newClient);
         this.router.navigate(['/krn']);
       }, error => {

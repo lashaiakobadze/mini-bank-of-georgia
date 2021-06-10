@@ -33,7 +33,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
       this.curClient = client;
       }
     );
-    this.accountService.fetchClientAccounts(this.curClient.clientKey)
+    this.accountService.fetchClientAccounts(this.curClient?.clientKey)
     .pipe(this.loaderService.useLoader)
     .subscribe(clientAccounts => {
       if (clientAccounts.length < 1) {
@@ -49,6 +49,12 @@ export class AccountsComponent implements OnInit, OnDestroy {
     this.accountService.deleteAccount(accountKey)
     .pipe(this.loaderService.useLoader)
     .subscribe();
+    this.shellService.fetchClient(this.curClient.clientKey)
+    .subscribe( updatedClientData => {
+        this.shellService.curClient.next(updatedClientData);
+        localStorage.setItem('clientData', JSON.stringify(updatedClientData));
+      }
+    );
   }
 
   ngOnDestroy() {

@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -8,7 +9,6 @@ import { BGValidators } from 'src/app/shared/validators/bg-validators';
 import { ShellService } from 'src/app/shell/shell.service';
 import { Client } from '../../bpm/client.model';
 import { PmdService } from '../pmd.service';
-import { Transfer } from '../transfer.model';
 
 @Component({
   selector: 'bg-pmd311',
@@ -29,7 +29,8 @@ export class Pmd311Component implements OnInit, OnDestroy {
     private pmdService: PmdService,
     private shellService: ShellService,
     private router: Router,
-    public alertService: AlertService
+    public alertService: AlertService,
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -52,22 +53,22 @@ export class Pmd311Component implements OnInit, OnDestroy {
   }
 
   onSendAmount() {
-    // console.log(
-    //   new Transfer(
-    //     this.sendAmountForm.value.senderAccountKey,
-    //     +this.sendAmountForm.value.receiverAccountKey,
-    //     +this.sendAmountForm.value.amount,
-    //   )
-    // );
-    this.pmdService.transferService(295, 291, 1
-      // +this.sendAmountForm.value.senderAccountKey,
-      // +this.sendAmountForm.value.receiverAccountKey,
-      // this.sendAmountForm.value.amount,
+    this.pmdService.transferService(
+      +this.sendAmountForm.value.senderAccountKey,
+      +this.sendAmountForm.value.receiverAccountKey,
+      this.sendAmountForm.value.amount,
     )
     .subscribe(transferData => {
         if (!transferData) {
           return;
         }
+        console.log(transferData);
+        this.shellService.fetchClient(this.curClient.clientKey)
+        .subscribe( updatedClientData => {
+            this.shellService.curClient.next(updatedClientData);
+            localStorage.setItem('clientData', JSON.stringify(updatedClientData));
+          }
+        );
         this.router.navigate(['/krn/accounts']);
       }, error => {
         this.alertService.errorMessage = error;

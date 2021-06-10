@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -17,7 +17,7 @@ export class ClientHeaderComponent implements OnInit, OnDestroy {
   curClientSub: Subscription;
 
   constructor(
-    private shellService: ShellService,
+    public shellService: ShellService,
     private router: Router
   ) { }
 
@@ -27,6 +27,7 @@ export class ClientHeaderComponent implements OnInit, OnDestroy {
     );
   }
 
+
   onLogOutClient() {
     this.shellService.curClient.next(null);
     localStorage.removeItem('clientData');
@@ -35,6 +36,7 @@ export class ClientHeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.curClientSub?.unsubscribe();
+    this.shellService.curClient.next(null);
   }
 
 }

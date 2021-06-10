@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { Client } from './modules/bpm/client.model';
 
@@ -9,11 +11,9 @@ import { Client } from './modules/bpm/client.model';
 })
 export class ShellService {
   curClient = new BehaviorSubject(null);
-  // არ მუშაობს Client მოდელზე, მხოლოდ კლიენტის რეგისტრაციისას, API-დან მოსული კლიენტისათვის, დანარჩენი ყველგან კარგადაა საქმე.
-  // curClient = new BehaviorSubject<Client>(null);
 
+  constructor(private http: HttpClient) { }
 
-  constructor() {}
 
   autoLoginClient() {
     const clientData = JSON.parse(localStorage.getItem('clientData'));
@@ -30,5 +30,13 @@ export class ShellService {
       clientData.sumAmount
     );
     this.curClient.next(curClient);
+  }
+
+  fetchClient(clientKey: number) {
+    return this.http.
+      get<Client>(`clients?firstName=&lastName=&clientKey=${clientKey}`)
+      .pipe(
+        map(updatedClient => updatedClient[0])
+      );
   }
 }

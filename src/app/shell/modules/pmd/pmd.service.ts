@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoaderService } from 'src/app/shared/loader/loader.service';
+import { HttpClient } from '@angular/common/http';
+
 import { Transfer } from './transfer.model';
 
 @Injectable({
@@ -25,10 +26,11 @@ export class PmdService {
       .pipe(this.loaderService.useLoader);
   }
 
-  transferService(senderAccountKey, receivedAccountKey, amount) {
-    return this.http.post('transfer', {
+
+  transferService(senderAccountKey, receiverAccountKey, amount) {
+    return this.http.post<Transfer>('transfer', {
       senderAccountKey,
-      receivedAccountKey,
+      receiverAccountKey,
       amount
     }).pipe(this.loaderService.useLoader);
   }
