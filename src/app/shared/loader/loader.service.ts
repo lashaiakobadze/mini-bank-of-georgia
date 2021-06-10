@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { finalize, switchMapTo, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,10 @@ export class LoaderService {
   }
 
   useLoader = <T>(obs: Observable<T>): Observable<T> => {
-    this.startLoading();
-    return obs.pipe(finalize(() => this.endLoading()));
+    return of(null).pipe(
+      tap(() => this.startLoading()),
+      switchMapTo(obs),
+      finalize(() => this.endLoading())
+    );
   }
 }

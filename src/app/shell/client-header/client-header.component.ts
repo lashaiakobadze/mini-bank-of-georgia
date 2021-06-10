@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+
 import { Client } from '../modules/bpm/client.model';
 import { ShellService } from '../shell.service';
+
 
 @Component({
   selector: 'bg-client-header',
@@ -20,8 +22,8 @@ export class ClientHeaderComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.curClientSub = this.shellService.curClient.subscribe( client =>
-      this.curClient = client
+    this.curClientSub = this.shellService.curClient.subscribe(
+      client => this.curClient = client
     );
   }
 
@@ -29,10 +31,6 @@ export class ClientHeaderComponent implements OnInit, OnDestroy {
     this.shellService.curClient.next(null);
     localStorage.removeItem('clientData');
     this.router.navigate(['/bpm/bpm000']);
-  }
-
-  onFetchClientAccounts() {
-    // this.shellService.fetchClientAccounts(this.curClient.clientKey);
   }
 
   ngOnDestroy() {

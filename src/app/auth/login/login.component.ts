@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, EventEmitter } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { EventEmitter } from 'events';
+import { AlertService } from 'src/app/shared/alert/alert.service';
+
 import { BGValidators } from 'src/app/shared/validators/bg-validators';
 import { AuthService } from '../../shared/auth/auth.service';
 
@@ -12,11 +13,11 @@ import { AuthService } from '../../shared/auth/auth.service';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
-  errorMsg = new EventEmitter();
 
   constructor(
     private router: Router,
     private authService: AuthService,
+    public alertService: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -30,13 +31,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     const username = this.get('username').value;
     const password = this.get('password').value;
     this.authService.login(username, password).subscribe(
-      (resData) => {
+      () => {
         this.loginForm.reset();
         this.router.navigate(['bpm']);
       },
       (error) => {
-        this.errorMsg = error;
-        console.error(this.errorMsg);
+        this.alertService.errorMessage = error;
       }
     );
   }

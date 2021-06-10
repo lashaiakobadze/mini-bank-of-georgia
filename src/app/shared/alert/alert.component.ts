@@ -7,7 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class AlertComponent implements OnInit {
   @Input() error: string;
-  @Output() closeClick = new EventEmitter<void>();
+  @Output() closed = new EventEmitter<void>();
 
   constructor() {}
 

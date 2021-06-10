@@ -1,3 +1,7 @@
 <bg-loader></bg-loader>
 <router-outlet></router-outlet>
-<ng-template alertPlaceholder></ng-template>
+<bg-alert
+ *ngIf="alertService.errorMessage"
+ [error]="alertService.errorMessage"
+ (closed)="alertService.errorMessage = null"
+></bg-alert>

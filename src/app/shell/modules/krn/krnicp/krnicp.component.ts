@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ShellService } from 'src/app/shell/shell.service';
 
 @Component({
   selector: 'bg-krincp',
@@ -8,23 +7,9 @@ import { ShellService } from 'src/app/shell/shell.service';
 })
 export class KrnicpComponent implements OnInit {
 
-  constructor(
-    private shellService: ShellService
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.shellService.curClient.subscribe(user => {
-      if (!user) {
-        console.log('ar aris mosuli');
-      }
-      console.log('useriii', user);
-    });
-  }
-
-  getCurUser() {
-    this.shellService.curClient.subscribe(user => {
-      console.log(user);
-    });
   }
 
 }

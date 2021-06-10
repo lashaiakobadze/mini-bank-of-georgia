@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { BGValidators } from 'src/app/shared/validators/bg-validators';
+import { ShellService } from 'src/app/shell/shell.service';
+import { AlertService } from 'src/app/shared/alert/alert.service';
+import { Client } from '../client.model';
 import { ClientsService } from '../clients.service';
 import { ClientRegister } from './clientRegister.model';
+import { last } from 'rxjs/operators';
 
 @Component({
   selector: 'bg-bpm001',
@@ -11,34 +17,48 @@ import { ClientRegister } from './clientRegister.model';
 })
 export class Bpm001Component implements OnInit {
   clientRegister: FormGroup;
-  errorMsg: any = null;
-  successMsg: string = null;
 
   constructor(
-    private clientsService: ClientsService
+    private clientsService: ClientsService,
+    private shellService: ShellService,
+    private router: Router,
+    public alertService: AlertService
   ) { }
 
   ngOnInit(): void {
     this.initForm();
   }
 
-
   onClientRegister() {
     if (this.clientRegister.invalid) {
-      console.log('form is not valid!!!');
       return;
     }
+
     this.clientsService.createClient(new ClientRegister(
       this.clientRegister.value.firstName,
       this.clientRegister.value.lastName,
       this.clientRegister.value.plusPoints
       ))
-      .subscribe(() => {
-        this.successMsg = 'პოსტი წარმატებით დაემატა';
+      .subscribe(newClient => {
         this.clientRegister.reset();
-      }, err => {
-        this.errorMsg = err.error;
-        console.log(this.errorMsg);
+
+        // const newCurClient = new Client(
+        //   newClient.clientKey,
+        //   newClient.firstName,
+        //   newClient.image,
+        //   newClient.lastName,
+        //   newClient.plusPoints,
+        //   newClient.sumAmount
+        // );
+
+        // არ მუშაობს ბიჰევიერსაბჯექთი newCurClien-სათვის, წარმოუდგენელია რატომ, newClient-ვერ ხედავს ამის ტიპს.
+        // this.shellService.curClient.next(newCurClient);
+
+
+        this.shellService.curClient.next(newClient);
+        this.router.navigate(['/krn']);
+      }, error => {
+        this.alertService.errorMessage = error;
       }
     );
   }

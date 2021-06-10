@@ -2,7 +2,7 @@
   <div class="ui segment client">
     <div class="client_info">
       <div class="client-image">
-        <img src="https://picsum.photos/200" alt="client-image">
+        <img [src]="curClient.image" alt="client-image">
       </div>
       <div class="client_info_about">
         <div class="client-name">{{ curClient.firstName }}</div>
@@ -14,7 +14,7 @@
         <div class="client_service_actives-active">
           <span class="active">აქტივები:</span>
           <div>
-            <span class="balance">{{ curClient.sumAmount }}</span>
+            <span class="balance">{{ curClient.sumAmount | number:'3.2-5'}}</span>
             <span class="gel">GEL</span>
           </div>
         </div>
@@ -29,8 +29,20 @@
     </div>
   </div>
   <div class="ui horizontal segments tabs">
-    <a class="ui segment page-link" routerLinkActive="active" routerLink="/krn/krnicp"  href="/krn/krnicp">მთავარი</a>
-    <a class="ui segment page-link" routerLinkActive="active" routerLink="/krn/accounts"  href="/krn/accounts" (click)="onFetchClientAccounts()">ანგარიშები</a>
-    <a class="ui segment page-link" routerLinkActive="active" routerLink="/krn/operations"  href="/krn/operations">ოპერაციები</a>
+    <a
+     class="ui segment page-link"
+     routerLinkActive="active"
+     routerLink="/krn/krnicp"
+    >მთავარი</a>
+    <a
+     class="ui segment page-link"
+     routerLinkActive="active"
+     routerLink="/krn/accounts"
+    >ანგარიშები</a>
+    <a
+     class="ui segment page-link"
+     routerLinkActive="active"
+     routerLink="/krn/operations"
+    >ოპერაციები</a>
   </div>
 </div>

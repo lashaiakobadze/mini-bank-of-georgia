@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
+import { ShellGuard } from 'src/app/shared/guards/shell.guard';
+
 import { KrnComponent } from './krn.component';
 import { KrnicpComponent } from './krnicp/krnicp.component';
 import { AccountsComponent } from './accounts/accounts.component';

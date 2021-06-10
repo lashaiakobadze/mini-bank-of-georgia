@@ -1,9 +1,9 @@
-<div class="ui active dimmer" (click)="closeClick.emit()">
+<div class="ui active dimmer" (click)="closed.emit()">
   <div class="ui active modal" (click)="$event.stopPropagation()">
     <div class="header">შეცდომა</div>
     <div class="content">{{ error }}</div>
     <div class="actions">
-      <button class="ui orange icon button" (click)="closeClick.emit()">
+      <button class="ui orange icon button" (click)="closed.emit()">
         <i class="checkmark icon"></i>
       </button>
     </div>

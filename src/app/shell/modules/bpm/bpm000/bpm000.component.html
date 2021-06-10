@@ -25,27 +25,30 @@
         </div>
       </div>
       <div class="grid btn-search">
-        <button type="submit" class="ui floated blue icon button "><i class="search icon"></i></button>
+        <button type="submit" class="ui floated blue icon button ">
+          <i class="search icon"></i>
+        </button>
       </div>
     </form>
 
-    <div class="table-header" *ngIf="showClients">
+    <div class="table-header" *ngIf="clients">
       <span>კლიენტები</span>
       <button routerLink="/bpm/bpm001" class="ui icon button">
         <i class="plus icon"></i>
       </button>
     </div>
-    <table *ngIf="showClients">
-      <thead>
+    <table *ngIf="clients">
+      <div *ngIf="clients.length === 0"> ჩანაწერი არ მოიძებნა </div>
+      <thead *ngIf="clients.length !== 0">
         <th>სახელი</th>
         <th>გვარი</th>
         <th>კლიენტის უნიკალური</th>
       </thead>
       <tbody *ngFor="let client of clients">
-        <tr class="tr-border curClient" (click)="getClientData($event)">
+        <tr class="tr-border" (click)="getClientData(client.clientKey)">
           <td>{{ client.firstName }}</td>
           <td>{{ client.lastName }}</td>
-          <td value="client.clientKey">{{ client.clientKey }}</td>
+          <td>{{ client.clientKey }}</td>
         </tr>
       </tbody>
     </table>

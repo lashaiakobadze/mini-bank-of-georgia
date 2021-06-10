@@ -11,10 +11,10 @@
         </button>
       </div>
       <table>
-        <ng-template [ngIf]="!!!curClientAccounts">
+        <ng-template [ngIf]="curClientAccounts.length === 0">
           <div> ჩანაწერი არ მოიძებნა </div>
         </ng-template>
-        <ng-template [ngIf]="!!curClientAccounts">
+        <ng-template [ngIf]="curClientAccounts.length !== 0">
           <thead>
             <th>მფლობელი</th>
             <th>სახელი</th>
@@ -23,12 +23,12 @@
           </thead>
         </ng-template>
         <tbody *ngFor="let account of curClientAccounts">
-          <tr value="account.accountKey">
+          <tr class="tr-border">
             <td>{{ curClient.firstName }}</td>
             <td>{{ account.accountName }}</td>
-            <td>{{ account.amount }}</td>
+            <td>{{ account.amount | number:'3.2-5' }}</td>
             <td>
-              <i class="trash button icon" (click)="onDeleteAccount($event)"></i>
+              <i class="trash button icon" (click)="onDeleteAccount(account.accountKey)"></i>
             </td>
           </tr>
         </tbody>

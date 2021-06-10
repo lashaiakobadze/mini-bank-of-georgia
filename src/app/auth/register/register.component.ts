@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { AlertService } from 'src/app/shared/alert/alert.service';
+
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { BGValidators } from 'src/app/shared/validators/bg-validators';
 
@@ -10,9 +12,11 @@ import { BGValidators } from 'src/app/shared/validators/bg-validators';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  error;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    public alertService: AlertService
+    ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -31,8 +35,7 @@ export class RegisterComponent implements OnInit {
         this.registerForm.reset();
       },
       error => {
-        this.error = error;
-        console.log(error);
+        this.alertService.errorMessage = error;
       }
     );
   }

@@ -1,10 +1,12 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+
+import { ClientsService } from '../clients.service';
 import { LoaderService } from 'src/app/shared/loader/loader.service';
 import { ShellService } from 'src/app/shell/shell.service';
 import { Client } from '../client.model';
-import { ClientsService } from '../clients.service';
+
 
 @Component({
   selector: 'bg-bpm000',
@@ -13,7 +15,6 @@ import { ClientsService } from '../clients.service';
 })
 export class Bpm000Component implements OnInit {
   clientForm: FormGroup;
-  showClients: boolean;
   clients: Client[];
   curClient: Client;
 
@@ -25,28 +26,32 @@ export class Bpm000Component implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.showClients = false;
     this.initForm();
+    this.clients = null;
   }
-
 
   onfetchClients() {
     this.clientsService.fetchClients(this.clientForm.value)
     .pipe(this.loaderService.useLoader)
       .subscribe((clients) => {
+        if (!clients) {
+          this.clients = [];
+        }
         this.clients = clients;
-      });
+      }
+    );
   }
 
   onSearch() {
-    this.showClients = true;
     this.onfetchClients();
   }
 
-  getClientData(e) {
-    // console.log(this.clients.find(client => client.clientKey === +e.path[1].children[2].innerHTML));
-    this.curClient = this.clients.find(client => client.clientKey === +e.path[1].children[2].innerHTML);
+  getClientData(clientKey: number) {
+    this.curClient = this.clients.find(client => client.clientKey === clientKey);
     this.shellService.curClient.next(this.curClient);
+    if (!this.curClient) {
+      return;
+    }
     this.router.navigate(['/krn']);
     localStorage.setItem('clientData', JSON.stringify(this.curClient));
   }
@@ -58,5 +63,4 @@ export class Bpm000Component implements OnInit {
       clientKey: new FormControl(''),
     });
   }
-
 }

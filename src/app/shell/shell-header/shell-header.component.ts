@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/auth/auth.service';
+import { ShellService } from '../shell.service';
 
 @Component({
   selector: 'bg-shell-header',
@@ -8,7 +9,10 @@ import { AuthService } from 'src/app/shared/auth/auth.service';
 })
 export class ShellHeaderComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private shellService: ShellService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -16,6 +20,7 @@ export class ShellHeaderComponent implements OnInit {
   onLogOut() {
     this.authService.logout();
     localStorage.removeItem('clientData');
+    this.shellService.curClient.next(null);
   }
 
 }

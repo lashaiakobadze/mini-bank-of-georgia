@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
-import { AuthResponseModel } from './auth-response.model';
-import { LoaderService } from '../loader/loader.service';
+import { Router } from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError, BehaviorSubject } from 'rxjs';
+
+import { AuthResponse } from './auth-response.model';
+import { LoaderService } from '../loader/loader.service';
 import { User } from './user.model';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   user = new BehaviorSubject<User>(null);
-  private timer: any;
+  private tokenExpirationTime: any;
 
   constructor(
     private http: HttpClient,
@@ -23,7 +23,7 @@ export class AuthService {
 
   register(name, username, password) {
     return this.http
-      .post<AuthResponseModel>('register', {
+      .post<AuthResponse>('register', {
         name,
         username,
         password,
@@ -37,7 +37,7 @@ export class AuthService {
 
   login(username, password) {
     return this.http
-      .post<AuthResponseModel>('login', {
+      .post<AuthResponse>('login', {
         username,
         password,
       })
@@ -72,20 +72,20 @@ export class AuthService {
     this.user.next(null);
     this.router.navigate(['/auth']);
     localStorage.removeItem('userData');
-    if (this.timer) {
-      clearTimeout(this.timer);
+    if (this.tokenExpirationTime) {
+      clearTimeout(this.tokenExpirationTime);
     }
-    this.timer = null;
+    this.tokenExpirationTime = null;
   }
 
   autoLogout(expirationDuration: number) {
-    this.timer = setTimeout(
+    this.tokenExpirationTime = setTimeout(
       () => this.logout(),
       Math.min(2147483647, expirationDuration)
     );
   }
 
-  handleAuth = (resData: AuthResponseModel) => {
+  handleAuth = (resData: AuthResponse) => {
     const user = new User(
       resData.name,
       resData.username,

@@ -1,17 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { Account } from './account.model';
 import { AccountRegister } from './create-account/accountRegister.model';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountsService {
-  accountCreateMode: boolean;
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) { }
 
   createAccount(account: AccountRegister) {
     return this.http.put('accounts', {

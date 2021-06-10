@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoaderComponent } from './loader/loader.component';
-import { HttpClientModule } from '@angular/common/http';
-import { PopupDirective } from './directives/popup.directive';
 import { RouterModule } from '@angular/router';
+
 import { AlertComponent } from './alert/alert.component';
-import { ClientDirective } from './directives/client.directive';
+import { LoaderComponent } from './loader/loader.component';
+
+import { PopupDirective } from './directives/popup.directive';
 import { PlaceholderDirective } from './directives/placeholder.directive';
 
 
@@ -14,7 +14,6 @@ import { PlaceholderDirective } from './directives/placeholder.directive';
   declarations: [
     LoaderComponent,
     PopupDirective,
-    ClientDirective,
     PlaceholderDirective,
     AlertComponent
   ],
@@ -22,7 +21,6 @@ import { PlaceholderDirective } from './directives/placeholder.directive';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
     RouterModule
   ],
   exports: [
@@ -30,10 +28,8 @@ import { PlaceholderDirective } from './directives/placeholder.directive';
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
-    HttpClientModule,
     LoaderComponent,
     PopupDirective,
-    ClientDirective,
     PlaceholderDirective,
     AlertComponent
   ]

@@ -2,7 +2,7 @@
   <div class="left-sidebar__user-section">
     <div class="user">
       <div class="user_image">
-        <img src="https://picsum.photos/200" alt="user-image">
+        <img [src]="curUser?.image" alt="user-image">
       </div>
       <div class="user_name">{{ curUser?.name }}</div>
     </div>
@@ -10,7 +10,7 @@
   </div>
   <ul class="left-sidebar__pages-section">
     <li>
-      <a routerLink="./">
+      <a routerLink="/bpm/bpm000">
         <i class="home icon"></i>
         <span>მთავარი</span>
       </a>

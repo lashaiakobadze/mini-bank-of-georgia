@@ -8,9 +8,10 @@
         <div class="nine wide field">
           <label for="senderAccountKey">გამგზავნი ანგარიში</label>
           <select formControlName="senderAccountKey">
-            <option>აირჩიე</option>
-            <option value="215"> 215 - 123.00GEL (123) </option>
-            <!---->
+            <option value="">აირჩიე</option>
+            <ng-container *ngFor="let account of curClientAccounts">
+              <option [value]="account.accountKey">{{ account.accountKey }} - {{ account.amount | number:'3.2-5'}}GEL ({{ account.accountName }})</option>
+            </ng-container>
           </select>
           <p class="required" *ngIf="get('senderAccountKey').invalid && get('senderAccountKey').touched">
             <ng-container *ngFor="let errorMessage of errors('senderAccountKey')">
@@ -19,13 +20,15 @@
           </p>
         </div>
       </div>
+
       <div class="ui fields">
         <div class="nine wide field">
           <label for="receiverAccountKey">მიმღები ანგარიში</label>
           <select formControlName="receiverAccountKey">
-            <option value="" disabled="">აირჩიე</option>
-            <option value="215"> 215 - 123.00GEL (asd ad) </option>
-            <!---->
+            <option value="">აირჩიე</option>
+            <ng-container *ngFor="let account of allAccounts">
+              <option [value]="account.accountKey">{{ account.accountKey }} - {{ account.amount | number:'3.2-5' }}GEL ({{ account.clientFirstName }} {{ account.clientLastName }})</option>
+            </ng-container>
           </select>
           <p class="required" *ngIf="get('receiverAccountKey').invalid && get('receiverAccountKey').touched">
             <ng-container *ngFor="let errorMessage of errors('receiverAccountKey')">
@@ -34,6 +37,7 @@
           </p>
         </div>
       </div>
+      
       <div class="ui fields">
         <div class="nine wide field">
           <label for="amount">თანხა</label>
@@ -48,6 +52,9 @@
     </div>
   </div>
   <div class="ui segment">
-    <button class="ui green floated icon button" routerLink="/krn/accounts"><i class="chevron down icon"></i></button>
+    <button class="ui green floated icon button">
+      <i class="chevron down icon"></i>
+    </button>
   </div>
 </form>
+<!-- routerLink="/krn/accounts" -->

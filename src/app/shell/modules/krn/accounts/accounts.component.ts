@@ -1,32 +1,34 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+
 import { LoaderService } from 'src/app/shared/loader/loader.service';
 import { ShellService } from 'src/app/shell/shell.service';
+import { AccountsService } from './accounts.service';
+
 import { Client } from '../../bpm/client.model';
 import { Account } from './account.model';
-import { AccountsService } from './accounts.service';
+
 
 @Component({
   selector: 'bg-accounts',
   templateUrl: './accounts.component.html',
   styleUrls: ['./accounts.component.scss']
 })
-export class AccountsComponent implements OnInit {
+export class AccountsComponent implements OnInit, OnDestroy {
   curClient: Client;
-  curClientAccounts: Account[] = null;
+  curClientAccounts: Account[] = [];
   curAccount: Account;
+
+  curClientSub: Subscription;
 
   constructor(
     private shellService: ShellService,
     public accountService: AccountsService,
     private loaderService: LoaderService,
-    private renderer: Renderer2,
-    private elRef: ElementRef
   ) { }
 
   ngOnInit(): void {
-    this.shellService.curClient
+    this.curClientSub = this.shellService.curClient
     .subscribe(client => {
       this.curClient = client;
       }
@@ -38,27 +40,19 @@ export class AccountsComponent implements OnInit {
         return;
       }
       this.curClientAccounts = clientAccounts;
-      console.log(this.curClientAccounts);
       }
     );
-    this.accountService.accountCreateMode = false;
   }
 
-  onDeleteAccount(e) {
-    this.curAccount = this.curClientAccounts.find(account => account.accountName === e.path[2].children[1].innerHTML);
-    this.accountService.deleteAccount(this.curAccount.accountKey)
+  onDeleteAccount(accountKey: number) {
+    this.curClientAccounts = this.curClientAccounts.filter(account => account.accountKey !== accountKey);
+    this.accountService.deleteAccount(accountKey)
     .pipe(this.loaderService.useLoader)
     .subscribe();
-    e.path[2].style.display = 'none';
-    // this.renderer.setStyle(this.elRef.nativeElement, 'color', 'red');
-    // this.router.navigate(['krn/accounts']);
-    // this.curClientAccounts = null;
-    // this.accountService.fetchClientAccounts(this.curClient.clientKey)
-    // .pipe(this.loaderService.useLoader)
-    // .subscribe(clientAccounts => {
-    //     this.curClientAccounts = clientAccounts;
-    //   }
-    // );
+  }
+
+  ngOnDestroy() {
+    this.curClientSub?.unsubscribe();
   }
 
 }
